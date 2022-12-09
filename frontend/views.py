@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from .forms import UserRegisterFrom
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -36,3 +37,16 @@ class registerView(View):
             user.username = user.username.lower()
             user.save()
         return render(request, self.template_name, {"user":user} )
+
+
+
+class LoginView(View):
+    template_name = "frontend/register_login.html"  
+
+    def get(self, request, *args, **kwargs) -> render:
+        return render(request, self.template_name)
+
+
+
+    def post(self, request, *args, **kwargs) -> render:
+        return render(request, self.template_name)

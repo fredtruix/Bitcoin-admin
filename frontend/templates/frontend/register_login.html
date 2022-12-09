@@ -10,9 +10,13 @@
         </a>
 
         {% if "register" %}
-        {% include "frontend/component/auth/register.html" %}
+
+            {% include "frontend/component/auth/register.html" %}
+
         {% else %}
-        {% include "frontend/component/auth/login.html" %}
+
+            {% include "frontend/component/auth/login.html" %}
+
         {% endif %}
       
     </div>
