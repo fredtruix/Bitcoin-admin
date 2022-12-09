@@ -22,7 +22,8 @@ class registerView(View):
     def get(self, request, *args, **kwargs):
         form = UserRegisterFrom()
         context = {
-            "form":form
+            "form":form,
+            "register":"register"
         }
         return render(request, self.template_name, context )
 
