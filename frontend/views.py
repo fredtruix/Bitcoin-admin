@@ -11,3 +11,17 @@ class Dashboard(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+
+class registerView(View):
+    template_name = "frontend/register_login.html"
+
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name)
