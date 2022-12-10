@@ -44,9 +44,13 @@ class LoginView(View):
     template_name = "frontend/register_login.html"  
 
     def get(self, request, *args, **kwargs) -> render:
+      
         return render(request, self.template_name)
 
 
 
     def post(self, request, *args, **kwargs) -> render:
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        print(email)
         return render(request, self.template_name)
