@@ -4,14 +4,16 @@ from .forms import UserRegisterFrom
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
 
 
 
-class Dashboard(View):
+class Dashboard(LoginRequiredMixin, View):
     template_name = "frontend/index.html"
+    login_url = 'login'
 
 
     def get(self, request, *args, **kwargs):
@@ -19,11 +21,13 @@ class Dashboard(View):
 
 
 
-class registerView(View):
+class registerView( View):
     template_name = "frontend/register_login.html"
 
 
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('dashboard')
         form = UserRegisterFrom()
         context = {
             "form":form,
@@ -48,6 +52,8 @@ class LoginView(View):
     template_name = "frontend/register_login.html"  
 
     def get(self, request, *args, **kwargs) -> render:
+        if request.user.is_authenticated:
+            return redirect('dashboard')
       
         return render(request, self.template_name)
 
