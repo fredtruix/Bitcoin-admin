@@ -3,7 +3,7 @@ from django.views.generic import View
 from .forms import UserRegisterFrom
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -65,3 +65,9 @@ class LoginView(View):
             login(request, user)
             return redirect('dashboard')
         return render(request, self.template_name)
+
+class LogoutView(View):
+
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
