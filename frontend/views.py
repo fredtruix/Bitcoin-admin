@@ -16,7 +16,7 @@ class Dashboard(LoginRequiredMixin, View):
     login_url = 'login'
 
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> render:
         return render(request, self.template_name)
 
 
@@ -25,7 +25,7 @@ class registerView( View):
     template_name = "frontend/register_login.html"
 
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> render:
         if request.user.is_authenticated:
             return redirect('dashboard')
         form = UserRegisterFrom()
@@ -37,7 +37,7 @@ class registerView( View):
 
 
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs) -> render or redirect:
         form = UserRegisterFrom(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -59,7 +59,7 @@ class LoginView(View):
 
 
 
-    def post(self, request, *args, **kwargs) -> render:
+    def post(self, request, *args, **kwargs) -> render or redirect:
         email = request.POST.get("email")
         password = request.POST.get("password")
         try:
@@ -74,6 +74,6 @@ class LoginView(View):
 
 class LogoutView(View):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> redirect:
         logout(request)
         return redirect('login')
