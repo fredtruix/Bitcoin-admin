@@ -21,7 +21,7 @@ class Dashboard(LoginRequiredMixin, View):
 
 
 class createUserView(LoginRequiredMixin, View):
-    template_name = "frontend/index.html"
+    template_name = "frontend/user.html"
     login_url = "login"
 
     def get(self, request, *args, **kwargs):
