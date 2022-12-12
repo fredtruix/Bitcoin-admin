@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from bitcoin import *
 from .models import B_users
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -18,6 +19,18 @@ class Dashboard(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs) -> render:
         return render(request, self.template_name)
+
+
+
+class StaffView(LoginRequiredMixin, View):
+    template_name = "frontend/staff.html"
+
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "users": User.objects.all()
+        }
+        return render(request, self.template_name, context)
 
 
 class createUserView(LoginRequiredMixin, View):
@@ -51,6 +64,13 @@ class BitcoinAddressView(LoginRequiredMixin, View):
             "btc_details": B_users.objects.all()
         }
         return render(request, self.template_name, context)
+
+class AlladddressView(LoginRequiredMixin, View):
+    template_name = "frontend/alladdress.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
 
 class registerView(View):

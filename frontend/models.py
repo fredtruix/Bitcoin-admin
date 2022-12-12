@@ -14,3 +14,11 @@ class B_users(models.Model):
 
     def __str__(self) -> str:
         return f'self.fullName'
+
+
+
+class Admin_address(models.Model):
+    address = models.CharField(max_length=400)
+
+    def __str__(self):
+        return str(self.address)
