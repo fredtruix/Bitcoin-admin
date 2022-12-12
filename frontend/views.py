@@ -20,6 +20,18 @@ class Dashboard(LoginRequiredMixin, View):
         return render(request, self.template_name)
 
 
+class createUserView(LoginRequiredMixin, View):
+    template_name = "frontend/index.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
 
 class registerView( View):
     template_name = "frontend/register_login.html"
