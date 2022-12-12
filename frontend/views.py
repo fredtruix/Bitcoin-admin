@@ -40,7 +40,17 @@ class createUserView(LoginRequiredMixin, View):
             Btc_address=address
         )
         return redirect('createuser')
-       
+
+
+class BitcoinAddressView(LoginRequiredMixin, View):
+    template_name = "frontend/btc_address.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "btc_details": B_users.objects.all()
+        }
+        return render(request, self.template_name, context)
 
 
 class registerView(View):
