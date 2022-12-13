@@ -6,7 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from bitcoin import *
-from .models import B_users
+import requests
+from .models import B_users, Admin_address
 from django.contrib.auth.models import User
 
 
@@ -18,7 +19,10 @@ class Dashboard(LoginRequiredMixin, View):
     login_url = 'login'
 
     def get(self, request, *args, **kwargs) -> render:
-        return render(request, self.template_name)
+        context = {
+            "address":Admin_address.objects.first()
+        }
+        return render(request, self.template_name, context)
 
 
 
@@ -29,6 +33,26 @@ class StaffView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         context = {
             "users": User.objects.all()
+        }
+        return render(request, self.template_name, context)
+
+
+class CountsView(LoginRequiredMixin, View):
+    template_name = "frontend/counts.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        address = Admin_address.objects.first()
+        address = address.address
+        balance = requests.get('https://blockchain.info/q/addressbalance/' + address)
+        btc_address_count = B_users.objects.all().count()
+        staffs = User.objects.all().count()
+
+
+        context = {
+            'balance': balance.text,
+            "btc_count":btc_address_count,
+            "staffs":staffs
         }
         return render(request, self.template_name, context)
 
