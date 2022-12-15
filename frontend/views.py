@@ -57,6 +57,28 @@ class CountsView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
+   
+
+
+
+class DetailView(LoginRequiredMixin, View):
+    template_name = "frontend/detail.html"
+    login_url ="login"
+    
+    
+    def get(self, request, *args, **kwargs):
+        detail = B_users.objects.get(fullName=kwargs["fullName"])
+        address = detail.Btc_address
+        # tx_history = history("3MqUP6G1daVS5YTD8fz3QgwjZortWwxXFd")
+        # print(tx_history)
+        context = {
+            "detail":detail
+            # "details":tx_history
+        }
+        return render(request, self.template_name, context)
+
+
+
 class createUserView(LoginRequiredMixin, View):
     template_name = "frontend/user.html"
     login_url = "login"
