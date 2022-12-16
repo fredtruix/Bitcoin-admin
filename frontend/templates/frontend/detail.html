@@ -22,9 +22,9 @@
                                     </div>
                                 </div>
                             </address>
-                            <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-300 lg:mb-6 lg:text-4xl ">Bitcoin Balance : $10</h1>
+                            <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-300 lg:mb-6 lg:text-4xl ">Bitcoin Balance : $<span hx-get="{% url 'balance' detail.fullName %}" hx-trigger="every 10s"></span></h1>
                         </header>
-                        <a href="https://www.blockchain.com/explorer/addresses/btc/{{ detail.Btc_address }}"" target="_blank"  class="bg-gray-300 text-black py-3 px-2 rounded-lg font-semibold">view transaction</a>
+                        <a href="https://www.blockchain.com/explorer/addresses/btc/{{ detail.Btc_address }}"" target="_blank"  class=" bg-indigo-800 text-white text-xs font-semibold py-3 px-2 rounded-lg font-semibold">view transaction</a>
                     
                     </article>
                 </div>

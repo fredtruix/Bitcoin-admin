@@ -119,6 +119,20 @@ class AlladddressView(LoginRequiredMixin, View):
         return render(request, self.template_name)
 
 
+class BalanceView(LoginRequiredMixin, View):
+    template_name = "frontend/balance.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        details = B_users.objects.get(fullName = kwargs["name"])
+        address = details.Btc_address
+        balance = requests.get('https://blockchain.info/q/addressbalance/' + address)
+        context = {
+            "balance":balance.text
+        }
+        return render(request, self.template_name, context)
+
+
 class registerView(View):
     template_name = "frontend/register_login.html"
 
