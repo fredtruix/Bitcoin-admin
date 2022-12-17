@@ -1,9 +1,9 @@
+<script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
 <table class="w-full whitespace-nowrap">
     <thead class="bg-black/60">
         <th class="text-left py-3 px-2 rounded-l-lg">Name</th>
         <th class="text-left py-3 px-2">Email</th>
         <th class="text-left py-3 px-2">Address</th>
-        <th class="text-left py-3 px-2">balance</th>
         <th class="text-left py-3 px-2">Phone</th>
         <th class="text-left py-3 px-2 rounded-r-lg">Actions</th>
     </thead>
@@ -17,7 +17,6 @@
         </td>
         <td class="py-3 px-2">{{ btc_detail.email }}</td>
         <td class="py-3 px-2"> <a href="https://www.blockchain.com/explorer/addresses/btc/{{ btc_detail.Btc_address }}" target="_blank" rel="noopener noreferrer">{{ btc_detail.Btc_address|truncatechars:15 }}</a></td>
-        <td class="py-3 px-2" hx-get="{% url 'balance' btc_detail.fullName %}" hx-trigger="every 10s">...</td>
         <td class="py-3 px-2">{{ btc_detail.phone_number }}</td>
         <td class="py-3 px-2">
             <div class="inline-flex items-center space-x-3">
