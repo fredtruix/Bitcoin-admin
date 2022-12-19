@@ -18,10 +18,19 @@ class Dashboard(LoginRequiredMixin, View):
     template_name = "frontend/index.html"
     login_url = 'login'
 
+
+   
+
     def get(self, request, *args, **kwargs) -> render:
+
         context = {
             "address":Admin_address.objects.first()
         }
+        # i = 0
+        # while i == 0:
+        #     print("hi")
+        
+
         return render(request, self.template_name, context)
 
 
@@ -64,13 +73,14 @@ class CountsView(LoginRequiredMixin, View):
 class DetailView(LoginRequiredMixin, View):
     template_name = "frontend/detail.html"
     login_url ="login"
+
     
     
     def get(self, request, *args, **kwargs):
         detail = B_users.objects.get(fullName=kwargs["fullName"])
         address = detail.Btc_address
-        # tx_history = history("3MqUP6G1daVS5YTD8fz3QgwjZortWwxXFd")
-        # print(tx_history)
+        tx_history = history("3MqUP6G1daVS5YTD8fz3QgwjZortWwxXFd")
+        print(tx_history)
         context = {
             "detail":detail
             # "details":tx_history
@@ -134,7 +144,7 @@ class BalanceView(LoginRequiredMixin, View):
 
 
 class comfirmView(LoginRequiredMixin, View):
-    template_name = "frontend/balance.html"
+    template_name = "frontend/confirm.html"
     login_url = "login"
 
 

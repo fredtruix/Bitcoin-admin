@@ -1,0 +1,5 @@
+{% if balance == "0" %}
+<a class="text-gray-300 text-lg px-1">No transaction to confirm</a>
+{% else %}
+<a href="https://www.blockchain.com/explorer/addresses/btc/{{ detail.Btc_address }}"" target="_blank"  class=" bg-red-800 text-white text-xs font-semibold py-3 px-4 rounded-lg font-semibold" >confirm</a>
+{% endif %}
