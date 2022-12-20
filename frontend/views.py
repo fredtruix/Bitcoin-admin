@@ -9,6 +9,7 @@ from bitcoin import *
 import requests
 from .models import B_users, Admin_address
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # Create your views here.
@@ -18,26 +19,22 @@ class Dashboard(LoginRequiredMixin, View):
     template_name = "frontend/index.html"
     login_url = 'login'
 
-
-   
-
     def get(self, request, *args, **kwargs) -> render:
 
         context = {
-            "address":Admin_address.objects.first()
+            "address": Admin_address.objects.first()
         }
-        # i = 0
-        # while i == 0:
-        #     print("hi")
-        
+
+        address = B_users.objects.all()
+        for i in address:
+            if i.Btc_address:
+                print("yes")
 
         return render(request, self.template_name, context)
 
 
-
 class StaffView(LoginRequiredMixin, View):
     template_name = "frontend/staff.html"
-
 
     def get(self, request, *args, **kwargs):
         context = {
@@ -53,40 +50,33 @@ class CountsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         address = Admin_address.objects.first()
         address = address.address
-        balance = requests.get('https://blockchain.info/q/addressbalance/' + address)
+        balance = requests.get(
+            'https://blockchain.info/q/addressbalance/' + address)
         btc_address_count = B_users.objects.all().count()
         staffs = User.objects.all().count()
 
-
         context = {
             'balance': balance.text,
-            "btc_count":btc_address_count,
-            "staffs":staffs
+            "btc_count": btc_address_count,
+            "staffs": staffs
         }
         return render(request, self.template_name, context)
-
-
-   
-
 
 
 class DetailView(LoginRequiredMixin, View):
     template_name = "frontend/detail.html"
-    login_url ="login"
+    login_url = "login"
 
-    
-    
     def get(self, request, *args, **kwargs):
         detail = B_users.objects.get(fullName=kwargs["fullName"])
         address = detail.Btc_address
-        tx_history = history("3MqUP6G1daVS5YTD8fz3QgwjZortWwxXFd")
-        print(tx_history)
+        # tx_history = history("3MqUP6G1daVS5YTD8fz3QgwjZortWwxXFd")
+        # print(tx_history)
         context = {
-            "detail":detail
+            "detail": detail
             # "details":tx_history
         }
         return render(request, self.template_name, context)
-
 
 
 class createUserView(LoginRequiredMixin, View):
@@ -116,10 +106,34 @@ class BitcoinAddressView(LoginRequiredMixin, View):
     login_url = "login"
 
     def get(self, request, *args, **kwargs):
+        q = request.GET.get("q")
+        if q:
+            context = {
+                "btc_details": B_users.objects.filter(
+                    Q(fullName__icontains=q) | 
+                    Q(Btc_address__icontains=q) | 
+                    Q(phone_number__icontains=q) |
+                    Q(email__icontains=q)
+                    )
+            }
+        else:
+            context = {
+                "btc_details": B_users.objects.all()
+            }
+
+        return render(request, self.template_name, context)
+
+
+class AddressView(LoginRequiredMixin, View):
+    template_name = "frontend/btc_address.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
         context = {
-            "btc_details": B_users.objects.all()
+            "btc_details": B_users.objects.all()[0:2]
         }
         return render(request, self.template_name, context)
+
 
 class AlladddressView(LoginRequiredMixin, View):
     template_name = "frontend/alladdress.html"
@@ -134,11 +148,12 @@ class BalanceView(LoginRequiredMixin, View):
     login_url = "login"
 
     def get(self, request, *args, **kwargs):
-        details = B_users.objects.get(fullName = kwargs["name"])
+        details = B_users.objects.get(fullName=kwargs["name"])
         address = details.Btc_address
-        balance = requests.get('https://blockchain.info/q/addressbalance/' + address)
+        balance = requests.get(
+            'https://blockchain.info/q/addressbalance/' + address)
         context = {
-            "balance":balance.text
+            "balance": balance.text
         }
         return render(request, self.template_name, context)
 
@@ -147,13 +162,13 @@ class comfirmView(LoginRequiredMixin, View):
     template_name = "frontend/confirm.html"
     login_url = "login"
 
-
     def get(self, request, *args, **kwargs):
-        details = B_users.objects.get(fullName = kwargs["name"])
+        details = B_users.objects.get(fullName=kwargs["name"])
         address = details.Btc_address
-        balance = requests.get('https://blockchain.info/q/addressbalance/' + address)
+        balance = requests.get(
+            'https://blockchain.info/q/addressbalance/' + address)
         context = {
-            "balance":balance.text
+            "balance": balance.text
         }
         return render(request, self.template_name, context)
 

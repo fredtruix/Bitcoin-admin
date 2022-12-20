@@ -1,13 +1,14 @@
 from django.urls import path
 from .views import (Dashboard, registerView, LoginView,
                     LogoutView, createUserView, BitcoinAddressView, 
-                    AlladddressView, StaffView, CountsView, DetailView, BalanceView, comfirmView)
+                    AlladddressView, StaffView, CountsView, DetailView, AddressView,  BalanceView, comfirmView)
 
 
 urlpatterns = [
     path('dashboard/', Dashboard.as_view(), name="dashboard"),
     path('createuser/', createUserView.as_view(), name="createuser"),
     path('address/', AlladddressView.as_view(), name="address"),
+    path('addview/', AddressView.as_view(), name="addview"),
     path('staffs/', StaffView.as_view(), name="staffs"),
     path('counts/', CountsView.as_view(), name="counts"),
     path('detail/<str:fullName>/', DetailView.as_view(), name="detail"),

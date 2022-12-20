@@ -7,7 +7,7 @@
       {% include 'frontend/component/aside.html' %}
         <div id="content" class="bg-white/10 col-span-12 md:col-span-9 rounded-lg p-6">
             <div id="24h">
-                <h1 class="font-bold py-4 uppercase">Total users and bitcoin balance, Admin address : {{ address.address }} </h1>
+                <h1 class="font-bold py-4 uppercase text-xs">Total users and bitcoin balance, Admin address : {{ address.address|truncatechars:15 }} </h1>
                 <div id="stats" hx-get="/counts" hx-trigger="every 10s" class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                  
                 </div>
@@ -15,10 +15,11 @@
         
             <div id="last-users">
                 <h1 class="font-bold py-4 uppercase">Recent Sellers</h1>
-                <div class="overflow-x-scroll bg-black/30" hx-get="/btc-address" hx-trigger="every 2s">
+                <div class="overflow-x-scroll bg-black/30 mb-5" hx-get="/addview" hx-trigger="every 2s">
                   <p class="text-center">  
                     <img class="h-60 w-80" src="https://i.pinimg.com/originals/c4/3b/2d/c43b2d56b4ec611ac450e6782f7143b7.gif" alt="loader" srcset=""></p>
                 </div>
+                <a class="text-xs  bg-indigo-800 py-2 px-2 rounded-lg text-white font-semibold text-center" href="{% url 'address' %}">Load users addresses</a>
             </div>
            
         </div>
