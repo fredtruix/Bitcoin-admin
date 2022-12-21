@@ -13,6 +13,11 @@ from django.db.models import Q
 
 
 # Create your views here.
+def run():
+    i = 0
+    while i == 0:
+       print("hello")
+run()
 
 
 class Dashboard(LoginRequiredMixin, View):
@@ -20,15 +25,16 @@ class Dashboard(LoginRequiredMixin, View):
     login_url = 'login'
 
     def get(self, request, *args, **kwargs) -> render:
+        
 
         context = {
             "address": Admin_address.objects.first()
         }
 
         address = B_users.objects.all()
-        for i in address:
-            if i.Btc_address:
-                print("yes")
+        # for i in address:
+        #     if i.Btc_address:
+        #         print("yes")
 
         return render(request, self.template_name, context)
 
