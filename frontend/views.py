@@ -13,11 +13,11 @@ from django.db.models import Q
 
 
 # Create your views here.
-def run():
-    i = 0
-    while i == 0:
-       print("hello")
-run()
+# def run():
+#     i = 0
+#     while i == 0:
+#        print("hello")
+# run()
 
 
 class Dashboard(LoginRequiredMixin, View):
@@ -56,18 +56,18 @@ class CountsView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         address = Admin_address.objects.first()
         address = address.address
-        balance = requests.get(
-            'https://blockchain.info/q/addressbalance/' + address)
+        response = requests.get(
+            'https://chain.api.btc.com/v3/address/' + address)
         btc_address_count = B_users.objects.all().count()
         staffs = User.objects.all().count()
 
         context = {
-            'balance': balance.text,
+            'balance': response.json(),
             "btc_count": btc_address_count,
             "staffs": staffs
         }
         return render(request, self.template_name, context)
-
+# send()
 
 class DetailView(LoginRequiredMixin, View):
     template_name = "frontend/detail.html"
@@ -177,6 +177,16 @@ class comfirmView(LoginRequiredMixin, View):
             "balance": balance.text
         }
         return render(request, self.template_name, context)
+
+
+class confirmView(LoginRequiredMixin, View):
+    template_name = "frontend/confirm.html"
+    login_url = "login"
+
+    def get(self,request, *args, **kwargs) -> render:
+        # args.name = kwargs["name"]
+        # address = B_users.objects.get(fu)
+        return render(request, self.template_name)
 
 
 class registerView(View):
