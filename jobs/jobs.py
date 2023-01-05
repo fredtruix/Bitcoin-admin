@@ -5,12 +5,13 @@ import requests
 def send_mail() -> None:
     users = B_users.objects.all()
     for i in users:
-        balance = requests.get(
-            'https://blockchain.info/q/addressbalance/' + i.Btc_address)
-        # print(balance)
-        if str(balance.text) == "0":
-            print("no")
-        else:
-            print("yes")
-        print("happy")
+        response = requests.get(
+            'https://chain.api.btc.com/v3/address/' + i.Btc_address +'/tx')
+        response = response.json()
+        # print(response["data"]["balance"])
+        # if str(response.data.balance) == "0":
+        #     print("no")
+        # else:
+        #     print("yes")
+        # print("happy")
     print('it worked well')
