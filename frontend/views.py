@@ -156,10 +156,10 @@ class BalanceView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         details = B_users.objects.get(fullName=kwargs["name"])
         address = details.Btc_address
-        balance = requests.get(
-            'https://blockchain.info/q/addressbalance/' + address)
+        response = requests.get(
+            'https://chain.api.btc.com/v3/address/' + address)
         context = {
-            "balance": balance.text
+            "balance": response.json()
         }
         return render(request, self.template_name, context)
 

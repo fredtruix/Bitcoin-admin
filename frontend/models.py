@@ -13,7 +13,7 @@ class B_users(models.Model):
     private_key = models.CharField(max_length=500, blank=True, null=True)
 
     def __str__(self) -> str:
-        return f'self.fullName'
+        return f'{self.fullName}'
 
 
 
