@@ -1,0 +1,31 @@
+<script src="https://unpkg.com/htmx.org@1.8.4" integrity="sha384-wg5Y/JwF7VxGk4zLsJEcAojRtlVp1FKKdGy1qN+OMtdq72WRvX/EdRdqg/LOhYeV" crossorigin="anonymous"></script>
+<table class="w-full whitespace-nowrap">
+    <thead class="bg-black/60">
+        <th class="text-left py-3 px-2 rounded-l-lg">id</th>
+        <th class="text-left py-3 px-2">from</th>
+        <th class="text-left py-3 px-2">to</th>
+        <th class="text-left py-3 px-2">amount</th>
+        <th class="text-left py-3 px-2 rounded-r-lg">fee</th>
+    </thead>
+    {% for btc_detail in btc_details %}
+    <tr class="border-b border-gray-700">
+        <td class="py-3 px-2 font-semibold text-sm>
+            <div class="inline-flex space-x-3 items-center">
+            
+                <span>{{ btc_detail.fullName }}</span>
+            </div>
+        </td>
+        <td class="py-3 px-2">{{ btc_detail.email }}</td>
+        <td class="py-3 px-2"> <a href="https://www.blockchain.com/explorer/addresses/btc/{{ btc_detail.Btc_address }}" target="_blank" rel="noopener noreferrer">{{ btc_detail.Btc_address|truncatechars:15 }}</a></td>
+        <td class="py-3 px-2">{{ btc_detail.phone_number }}</td>
+        <td class="py-3 px-2">
+            <div class="inline-flex items-center space-x-3">
+              
+                <a class="text-xs  bg-indigo-800 py-2 px-2 rounded-lg text-white font-semibold" href="{% url 'detail' btc_detail.fullName %}">View detail</a>
+            </div>
+        </td>
+    </tr>
+   {% endfor %}
+
+    
+</table>

@@ -179,6 +179,21 @@ class comfirmView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
+class TransactionView(LoginRequiredMixin, View):
+    template_name = "frontend/transaction.html"
+    login_url = "login"
+
+    def get(self, request, *args, **kwargs):
+        details = B_users.objects.get(fullName=kwargs["name"])
+        address = details.Btc_address
+        response = requests.get(
+            f'https://chain.api.btc.com/v3/address/{address}/tx')
+        context = {
+            'balance':response.json()
+        }
+        return render(request, self.template_name, context)
+
+
 class confirmView(LoginRequiredMixin, View):
     template_name = "frontend/confirm.html"
     login_url = "login"
