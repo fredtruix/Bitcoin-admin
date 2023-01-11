@@ -187,10 +187,13 @@ class TransactionView(LoginRequiredMixin, View):
         details = B_users.objects.get(fullName=kwargs["name"])
         address = details.Btc_address
         response = requests.get(
-            f'https://chain.api.btc.com/v3/address/{address}/tx')
+            f'https://chain.api.btc.com/v3/address/bc1qgv4e5sftevns2dkku6pxgew48q6xxs3au0z4pg/tx')
         context = {
-            'balance':response.json()
+            'transactions':response.json(),
+            'address': "bc1qgv4e5sftevns2dkku6pxgew48q6xxs3au0z4pg",
+            # 'balance_diff':""
         }
+        #  <a class="text-xs  bg-indigo-800 py-2 px-2 rounded-lg text-white font-semibold" href="{% url 'detail' btc_detail.fullName %}">View detail</a>
         return render(request, self.template_name, context)
 
 
