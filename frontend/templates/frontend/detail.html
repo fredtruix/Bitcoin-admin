@@ -9,7 +9,7 @@
         <div id="content" class="bg-white/10 col-span-12 md:col-span-9 rounded-lg p-6"> 
             <section class="pt-8 pb-16 lg:pt-16 lg:pb-24 dark:bg-gray-900">
                 <div class="flex justify-between px-4   ">
-                    <article class="mx-1 w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+                    <article class=" w-full  format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
                         <header class="mb-4 lg:mb-6 not-format">
                             <address class="flex items-center mb-6 not-italic">
                                 <div class="inline-flex items-center mr-5 text-sm text-gray-900 dark:text-white">
@@ -24,9 +24,14 @@
                             </address>
                             <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-300 lg:mb-6 lg:text-1xl ">Bitcoin Balance : $<span hx-get="{% url 'balance' detail.fullName %}" hx-trigger="every 10s"></span></h1>
                         </header>
-                        <a href="https://www.blockchain.com/explorer/addresses/btc/{{ detail.Btc_address }}"" target="_blank"  class=" bg-indigo-800 text-white text-xs font-semibold py-3 px-2 rounded-lg font-semibold">view transaction</a> 
-                        <a class="mt-2"  hx-get="{% url 'confirm' detail.fullName %}" hx-trigger="every 10s"></a>
-
+                        <div id="last-users">
+                            <h1 class="font-bold py-4 uppercase">transaction</h1>
+                            <div class="overflow-x-scroll bg-black/30 mb-5" hx-get="/transactions/{{ detail.fullName }}/" hx-trigger="every 2s">
+                              <p class="text-center">  
+                                <img class="h-60 w-80" src="https://i.pinimg.com/originals/c4/3b/2d/c43b2d56b4ec611ac450e6782f7143b7.gif" alt="loader" srcset=""></p>
+                            </div>
+                            <a class="text-xs  bg-indigo-800 py-2 px-2 rounded-lg text-white font-semibold text-center" href="{% url 'address' %}">Load users addresses</a>
+                        </div>
                     
                     </article>
                 </div>

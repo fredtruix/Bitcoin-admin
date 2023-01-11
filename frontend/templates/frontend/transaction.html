@@ -4,9 +4,10 @@
 <table class="w-full whitespace-nowrap">
     <thead class="bg-black/60">
         <th class="text-left py-3 px-2 rounded-l-lg">amount</th>
+        <th class="text-left py-3 px-2 rounded-l-lg">fee</th>
         <th class="text-left py-3 px-2 rounded-l-lg">hash</th>
         <th class="text-left py-3 px-2">confirmations</th>
-        <th class="text-left py-3 px-2 rounded-r-lg">confirm</th>
+        <th class="text-left py-3 px-2 rounded-r-lg">actions</th>
     </thead>
     {% for transaction in transactions.data.list %}
 
@@ -17,7 +18,8 @@
             <span>0.0{{ transaction.inputs_value }}</span>
             </div>
         </td>
-        <td class="py-3 px-2">{{ transaction.hash }}</td>
+        <td class="py-3 px-2">{{ transaction.fee }}</td>
+        <td class="py-3 px-2">{{ transaction.hash|truncatechars:20 }}</td>
         <td class="py-3 px-2">{{ transaction.confirmations }}</td>
         {% for ads in transaction.outputs %}
         {% if address in ads.addresses %}
